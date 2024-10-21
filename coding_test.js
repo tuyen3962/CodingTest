@@ -7,28 +7,11 @@ const absent = 'absent';
 const present = 'present';
 const correct = 'correct';
 
+const size = 5;
+
 var allCharacters = []
 /// this array will store the present word and the slot of the word
 var presentSlotWord = []
-
-// test()
-
-// function test() {
-//     const words = [
-//         "Abide", "About", "Abuse", "Acute", "Admit", "Adopt", "Agree", "Alarm", "Align", "Allow",
-//         "Alone", "Alter", "Amend", "Angle", "Apple", "Apply", "Arena", "Argue", "Array", "Arrow",
-//         "Aside", "Asset", "Atone", "Awake", "Award", "Baked", "Basic", "Begin", "Belay", "Below",
-//         "Blend", "Block", "Bloom", "Board", "Brain", "Break", "Brick", "Bring", "Broad", "Broke",
-//         "Brown", "Brush", "Build", "Burst", "Carry", "Catch", "Cause", "Chain", "Chair", "Charm",
-//         "Chart", "Chase", "Cheat", "Check", "Chest", "Chief", "Chill", "Chose", "Clear", "Climb",
-//         "Close", "Cloud"
-//     ];
-
-//     for(let i = 0; i< words.length; i++) {
-//         renewOriginalCharacters();
-//         guessWord(words[i])
-//     }
-// }
 
 main()
 
@@ -64,7 +47,7 @@ async function guessWord() {
 
         const guessWordResult = await compareWord(newGuessWord); 
         const correctInGuessWord = guessWordResult.filter(word => word.result === correct);
-        if(correctInGuessWord.length == 5) {
+        if(correctInGuessWord.length == size) {
             hasFindWord = true;
             console.log('looping in ', i)
             return correctInGuessWord;
@@ -105,7 +88,7 @@ async function guessWord() {
 // get the word base on the correct word and present word
 function getRandomWordFromArray(correctWords) {
     let word = ''
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < size; i++) {
         if(correctWords[i].guess != '') {
             word += correctWords[i].guess;
         } else {
@@ -133,7 +116,8 @@ async function compareWord(guess) {
     const response = await axios.get(url, {
         params: {
             guess: guess,
-            seed: 1234
+            seed: 1234,
+            size: size
         }
     });
     return response.data;
